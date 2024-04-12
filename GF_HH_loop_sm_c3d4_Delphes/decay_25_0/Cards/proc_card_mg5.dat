@@ -1,0 +1,53 @@
+#************************************************************
+#*                     MadGraph5_aMC@NLO                    *
+#*                                                          *
+#*                *                       *                 *
+#*                  *        * *        *                   *
+#*                    * * * * 5 * * * *                     *
+#*                  *        * *        *                   *
+#*                *                       *                 *
+#*                                                          *
+#*                                                          *
+#*         VERSION 3.4.1                 2022-09-01         *
+#*                                                          *
+#*    The MadGraph5_aMC@NLO Development Team - Find us at   *
+#*    https://server06.fynu.ucl.ac.be/projects/madgraph     *
+#*                                                          *
+#************************************************************
+#*                                                          *
+#*               Command File for MadGraph5_aMC@NLO         *
+#*                                                          *
+#*     run as ./bin/mg5_aMC  filename                       *
+#*                                                          *
+#************************************************************
+set group_subprocesses Auto
+set ignore_six_quark_processes False
+set low_mem_multicore_nlo_generation False
+set complex_mass_scheme False
+set include_lepton_initiated_processes False
+set gauge unitary
+set loop_optimized_output True
+set loop_color_flows False
+set max_npoint_for_channel 0
+set default_unset_couplings 99
+set max_t_for_channel 99
+set zerowidth_tchannel True
+set nlo_mixed_expansion True
+define p  =  g u c d s u~ c~ d~ s~
+set pythia8_path /isilon/data/users/mstamenk/spanet-hhh-samples/MG5_aM\
+C_v3_4_1/HEPTools/pythia8 --no_save
+set delphes_path /isilon/data/users/mstamenk/spanet-hhh-samples/MG5_aM\
+C_v3_4_1/Delphes --no_save
+set exrootanalysis_path /isilon/data/users/mstamenk/spanet-hhh-samples\
+/MG5_aMC_v3_4_1/ExRootAnalysis --no_save
+set lhapdf lhapdf-config --no_save
+set auto_update 7 --no_save
+set cluster_type condor --no_save
+set mg5_path /isilon/data/users/mstamenk/spanet-hhh-samples/MG5_aMC_v3\
+_4_1 --no_save
+set mg5amc_py8_interface_path /isilon/data/users/mstamenk/spanet-hhh-s\
+amples/MG5_aMC_v3_4_1/HEPTools/MG5aMC_PY8_interface --no_save
+set ninja /isilon/data/users/mstamenk/spanet-hhh-samples/MG5_aMC_v3_4_\
+1/HEPTools/lib --no_save
+set collier /isilon/data/users/mstamenk/spanet-hhh-samples/MG5_aMC_v3_\
+4_1/HEPTools/lib --no_save

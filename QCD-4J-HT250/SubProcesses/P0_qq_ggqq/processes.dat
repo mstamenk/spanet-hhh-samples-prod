@@ -1,0 +1,14 @@
+1       u u > g g u u,c c > g g c c,d d > g g d d,s s > g g s s
+mirror  none
+2       u u~ > g g u u~,c c~ > g g c c~,d d~ > g g d d~,s s~ > g g s s~
+mirror  u~ u > g g u u~,c~ c > g g c c~,d~ d > g g d d~,s~ s > g g s s~
+3       u~ u~ > g g u~ u~,c~ c~ > g g c~ c~,d~ d~ > g g d~ d~,s~ s~ > g g s~ s~
+mirror  none
+4       u c > g g u c,u d > g g u d,u s > g g u s,c d > g g c d,c s > g g c s,d s > g g d s
+mirror  c u > g g u c,d u > g g u d,s u > g g u s,d c > g g c d,s c > g g c s,s d > g g d s
+5       u u~ > g g c c~,u u~ > g g d d~,u u~ > g g s s~,c c~ > g g u u~,c c~ > g g d d~,c c~ > g g s s~,d d~ > g g u u~,d d~ > g g c c~,d d~ > g g s s~,s s~ > g g u u~,s s~ > g g c c~,s s~ > g g d d~
+mirror  u~ u > g g c c~,u~ u > g g d d~,u~ u > g g s s~,c~ c > g g u u~,c~ c > g g d d~,c~ c > g g s s~,d~ d > g g u u~,d~ d > g g c c~,d~ d > g g s s~,s~ s > g g u u~,s~ s > g g c c~,s~ s > g g d d~
+6       u c~ > g g u c~,u d~ > g g u d~,u s~ > g g u s~,c u~ > g g c u~,c d~ > g g c d~,c s~ > g g c s~,d u~ > g g d u~,d c~ > g g d c~,d s~ > g g d s~,s u~ > g g s u~,s c~ > g g s c~,s d~ > g g s d~
+mirror  c~ u > g g u c~,d~ u > g g u d~,s~ u > g g u s~,u~ c > g g c u~,d~ c > g g c d~,s~ c > g g c s~,u~ d > g g d u~,c~ d > g g d c~,s~ d > g g d s~,u~ s > g g s u~,c~ s > g g s c~,d~ s > g g s d~
+7       u~ c~ > g g u~ c~,u~ d~ > g g u~ d~,u~ s~ > g g u~ s~,c~ d~ > g g c~ d~,c~ s~ > g g c~ s~,d~ s~ > g g d~ s~
+mirror  c~ u~ > g g u~ c~,d~ u~ > g g u~ d~,s~ u~ > g g u~ s~,d~ c~ > g g c~ d~,s~ c~ > g g c~ s~,s~ d~ > g g d~ s~

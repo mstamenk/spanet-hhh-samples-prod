@@ -1,0 +1,15 @@
+P0_gg_gggg
+P0_gg_ggqq
+P0_gg_ggbbx
+P0_gq_gggq
+P0_qq_gggg
+P0_gg_qqqq
+P0_gg_bbbxbx
+P0_gq_gqqq
+P0_qq_ggqq
+P0_qq_qqqq
+P0_gg_qqbbx
+P0_gq_gqbbx
+P0_qq_ggbbx
+P0_qq_qqbbx
+P0_qq_bbbxbx

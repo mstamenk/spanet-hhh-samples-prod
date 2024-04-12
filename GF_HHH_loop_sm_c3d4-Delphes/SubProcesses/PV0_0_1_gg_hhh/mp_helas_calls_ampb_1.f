@@ -1,0 +1,131 @@
+      SUBROUTINE ML5_0_0_1_MP_HELAS_CALLS_AMPB_1(P,NHEL,H,IC)
+C     
+      USE ML5_0_0_1_POLYNOMIAL_CONSTANTS
+      IMPLICIT NONE
+C     
+C     CONSTANTS
+C     
+      INTEGER    NEXTERNAL
+      PARAMETER (NEXTERNAL=5)
+      INTEGER    NCOMB
+      PARAMETER (NCOMB=4)
+
+      INTEGER    NLOOPS, NLOOPGROUPS, NCTAMPS
+      PARAMETER (NLOOPS=100, NLOOPGROUPS=100, NCTAMPS=14)
+      INTEGER    NLOOPAMPS
+      PARAMETER (NLOOPAMPS=114)
+      INTEGER    NWAVEFUNCS,NLOOPWAVEFUNCS
+      PARAMETER (NWAVEFUNCS=12,NLOOPWAVEFUNCS=216)
+      REAL*16     ZERO
+      PARAMETER (ZERO=0.0E0_16)
+      COMPLEX*32     IZERO
+      PARAMETER (IZERO=CMPLX(0.0E0_16,0.0E0_16,KIND=16))
+C     These are constants related to the split orders
+      INTEGER    NSO, NSQUAREDSO, NAMPSO
+      PARAMETER (NSO=1, NSQUAREDSO=1, NAMPSO=1)
+C     
+C     ARGUMENTS
+C     
+      REAL*16 P(0:3,NEXTERNAL)
+      INTEGER NHEL(NEXTERNAL), IC(NEXTERNAL)
+      INTEGER H
+C     
+C     LOCAL VARIABLES
+C     
+      INTEGER I,J,K
+      COMPLEX*32 COEFS(MAXLWFSIZE,0:VERTEXMAXCOEFS-1,MAXLWFSIZE)
+C     
+C     GLOBAL VARIABLES
+C     
+      INCLUDE 'mp_coupl_same_name.inc'
+
+      INTEGER GOODHEL(NCOMB)
+      LOGICAL GOODAMP(NSQUAREDSO,NLOOPGROUPS)
+      COMMON/ML5_0_0_1_FILTERS/GOODAMP,GOODHEL
+
+      INTEGER SQSO_TARGET
+      COMMON/ML5_0_0_1_SOCHOICE/SQSO_TARGET
+
+      LOGICAL UVCT_REQ_SO_DONE,MP_UVCT_REQ_SO_DONE,CT_REQ_SO_DONE
+     $ ,MP_CT_REQ_SO_DONE,LOOP_REQ_SO_DONE,MP_LOOP_REQ_SO_DONE
+     $ ,CTCALL_REQ_SO_DONE,FILTER_SO
+      COMMON/ML5_0_0_1_SO_REQS/UVCT_REQ_SO_DONE,MP_UVCT_REQ_SO_DONE
+     $ ,CT_REQ_SO_DONE,MP_CT_REQ_SO_DONE,LOOP_REQ_SO_DONE
+     $ ,MP_LOOP_REQ_SO_DONE,CTCALL_REQ_SO_DONE,FILTER_SO
+
+      COMPLEX*32 W(20,NWAVEFUNCS)
+      COMMON/ML5_0_0_1_MP_W/W
+
+      COMPLEX*32 WL(MAXLWFSIZE,0:LOOPMAXCOEFS-1,MAXLWFSIZE,
+     $ -1:NLOOPWAVEFUNCS)
+      COMPLEX*32 PL(0:3,-1:NLOOPWAVEFUNCS)
+      COMMON/ML5_0_0_1_MP_WL/WL,PL
+
+      COMPLEX*32 AMPL(3,NLOOPAMPS)
+      COMMON/ML5_0_0_1_MP_AMPL/AMPL
+
+C     
+C     ----------
+C     BEGIN CODE
+C     ----------
+
+C     The target squared split order contribution is already reached
+C      if true.
+      IF (FILTER_SO.AND.MP_CT_REQ_SO_DONE) THEN
+        GOTO 1001
+      ENDIF
+
+      CALL MP_VXXXXX(P(0,1),ZERO,NHEL(1),-1*IC(1),W(1,1))
+      CALL MP_VXXXXX(P(0,2),ZERO,NHEL(2),-1*IC(2),W(1,2))
+      CALL MP_SXXXXX(P(0,3),+1*IC(3),W(1,3))
+      CALL MP_SXXXXX(P(0,4),+1*IC(4),W(1,4))
+      CALL MP_SXXXXX(P(0,5),+1*IC(5),W(1,5))
+      CALL MP_SSS1_1(W(1,3),W(1,4),GC_30,MDL_MH,MDL_WH,W(1,6))
+      CALL MP_SSS1_1(W(1,5),W(1,6),GC_30,MDL_MH,MDL_WH,W(1,7))
+C     Counter-term amplitude(s) for loop diagram number 7
+      CALL MP_VVS1_0(W(1,1),W(1,2),W(1,7),R2_GGHB,AMPL(1,1))
+C     Counter-term amplitude(s) for loop diagram number 8
+      CALL MP_R2_GGHH_0(W(1,1),W(1,2),W(1,5),W(1,6),R2_GGHHB,AMPL(1,2))
+      CALL MP_SSS1_1(W(1,3),W(1,5),GC_30,MDL_MH,MDL_WH,W(1,8))
+      CALL MP_SSS1_1(W(1,4),W(1,8),GC_30,MDL_MH,MDL_WH,W(1,9))
+C     Counter-term amplitude(s) for loop diagram number 10
+      CALL MP_VVS1_0(W(1,1),W(1,2),W(1,9),R2_GGHB,AMPL(1,3))
+C     Counter-term amplitude(s) for loop diagram number 11
+      CALL MP_R2_GGHH_0(W(1,1),W(1,2),W(1,4),W(1,8),R2_GGHHB,AMPL(1,4))
+      CALL MP_SSS1_1(W(1,4),W(1,5),GC_30,MDL_MH,MDL_WH,W(1,10))
+      CALL MP_SSS1_1(W(1,3),W(1,10),GC_30,MDL_MH,MDL_WH,W(1,11))
+C     Counter-term amplitude(s) for loop diagram number 13
+      CALL MP_VVS1_0(W(1,1),W(1,2),W(1,11),R2_GGHB,AMPL(1,5))
+C     Counter-term amplitude(s) for loop diagram number 14
+      CALL MP_R2_GGHH_0(W(1,1),W(1,2),W(1,10),W(1,3),R2_GGHHB,AMPL(1,6)
+     $ )
+      CALL MP_SSSS1_1(W(1,3),W(1,4),W(1,5),GC_HHHH,MDL_MH,MDL_WH,W(1
+     $ ,12))
+C     Counter-term amplitude(s) for loop diagram number 16
+      CALL MP_VVS1_0(W(1,1),W(1,2),W(1,12),R2_GGHB,AMPL(1,7))
+C     Counter-term amplitude(s) for loop diagram number 57
+      CALL MP_VVS1_0(W(1,1),W(1,2),W(1,7),R2_GGHT,AMPL(1,8))
+C     Counter-term amplitude(s) for loop diagram number 58
+      CALL MP_R2_GGHH_0(W(1,1),W(1,2),W(1,5),W(1,6),R2_GGHHT,AMPL(1,9))
+C     Counter-term amplitude(s) for loop diagram number 60
+      CALL MP_VVS1_0(W(1,1),W(1,2),W(1,9),R2_GGHT,AMPL(1,10))
+C     Counter-term amplitude(s) for loop diagram number 61
+      CALL MP_R2_GGHH_0(W(1,1),W(1,2),W(1,4),W(1,8),R2_GGHHT,AMPL(1,11)
+     $ )
+C     Counter-term amplitude(s) for loop diagram number 63
+      CALL MP_VVS1_0(W(1,1),W(1,2),W(1,11),R2_GGHT,AMPL(1,12))
+C     Counter-term amplitude(s) for loop diagram number 64
+      CALL MP_R2_GGHH_0(W(1,1),W(1,2),W(1,10),W(1,3),R2_GGHHT,AMPL(1
+     $ ,13))
+C     Counter-term amplitude(s) for loop diagram number 66
+      CALL MP_VVS1_0(W(1,1),W(1,2),W(1,12),R2_GGHT,AMPL(1,14))
+C     At this point, all CT amps needed for (QCD=4), i.e. of split
+C      order ID=1, are computed.
+      IF(FILTER_SO.AND.SQSO_TARGET.EQ.1) GOTO 2000
+
+      GOTO 1001
+ 2000 CONTINUE
+      MP_CT_REQ_SO_DONE=.TRUE.
+ 1001 CONTINUE
+      END
+
